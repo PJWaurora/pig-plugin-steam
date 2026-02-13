@@ -1,0 +1,83 @@
+{
+  "name": "steam",
+  "display_name": "Steam状态查询",
+  "version": "2.0.0",
+  "description": "查询Steam用户状态和游戏信息，支持群组绑定SteamID、状态监控与自动推送",
+  "author": "pwaurora",
+  "enabled": true,
+  "main_class": "SteamModule",
+  "main_file": "steam_module.py",
+  "dependencies": [
+    "aiohttp",
+    "Pillow"
+  ],
+  "permissions": [
+    "send_image",
+    "send_message",
+    "database"
+  ],
+  "triggers": [
+    "@bot",
+    "steam",
+    "绑steam",
+    "steam状态",
+    "steam帮助"
+  ],
+  "background_tasks": [
+    "status_monitor"
+  ],
+  "help": {
+    "commands": [
+      {
+        "cmd": "@我 绑steam <SteamID/链接>",
+        "desc": "绑定 Steam 账号到当前群"
+      },
+      {
+        "cmd": "@我 steam",
+        "desc": "查看自己的 Steam 状态"
+      },
+      {
+        "cmd": "@我 steam @某人",
+        "desc": "查看他人的 Steam 状态"
+      },
+      {
+        "cmd": "@我 steam状态",
+        "desc": "查看本群所有已绑定成员的 Steam 状态"
+      },
+      {
+        "cmd": "@我 steam帮助",
+        "desc": "显示本帮助信息"
+      }
+    ],
+    "footer": "需要 Steam Web API Key | 支持自动状态监控"
+  },
+  "has_config": true,
+  "config_schema": {
+    "steam_api_key": {
+      "type": "string",
+      "label": "Steam API Key",
+      "default": "",
+      "description": "Steam Web API 密钥",
+      "required": true,
+      "secret": true
+    },
+    "auto_monitor": {
+      "type": "boolean",
+      "label": "自动监控",
+      "default": true,
+      "description": "是否自动监控绑定用户的状态变化"
+    },
+    "monitor_interval": {
+      "type": "number",
+      "label": "监控间隔(秒)",
+      "default": 120,
+      "description": "状态监控轮询间隔"
+    },
+    "db_path": {
+      "type": "string",
+      "label": "数据库路径",
+      "default": "/app/data/steam.db",
+      "description": "Steam 绑定数据库路径"
+    }
+  }
+}
